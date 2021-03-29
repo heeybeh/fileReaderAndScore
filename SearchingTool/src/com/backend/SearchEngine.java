@@ -1,4 +1,4 @@
-package com.backendTest;
+package com.backend;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,8 +10,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.backendTest.RankingArchieves.calcRankArchieves;
-import static com.backendTest.UserInterface.printMessage;
+import static com.backend.RankingArchieves.calcRankArchieves;
+import static com.backend.UserInterface.printMessage;
 
 public class SearchEngine {
     /**

@@ -1,4 +1,4 @@
-package com.backendTest;
+package com.backend;
 
 import java.util.List;
 

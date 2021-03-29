@@ -1,4 +1,4 @@
-package com.backendTest;
+package com.backend;
 
 import java.util.*;
 
@@ -49,9 +49,9 @@ public class UserInterface {
      *  formating string
      * */
     public static String formatArchiveWithScore(Archieve archieve) {
-        var splitFilePath = archieve.getFile()
+        String[] splitFilePath = archieve.getFile()
                 .split("/");
-        var format = splitFilePath.length-1;
+        int format = splitFilePath.length-1;
         return String.format("%s : %.0f %%", splitFilePath[format], archieve.getScore());
     }
 }

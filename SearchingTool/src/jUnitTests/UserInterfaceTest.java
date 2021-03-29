@@ -1,7 +1,7 @@
 package jUnitTests;
 
-import com.backendTest.Archieve;
-import com.backendTest.UserInterface;
+import com.backend.Archieve;
+import com.backend.UserInterface;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class UserInterfaceTest {
     @Test
     void wordEntryByConsoleMockedReceivingTwoWords() {
         System.setIn(new ByteArrayInputStream("testIn testOut".getBytes()));
-        var word = userInterface.wordEntry();
+        String word = userInterface.wordEntry();
         assertEquals(word, "testIn testOut");
     }
 

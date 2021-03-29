@@ -1,6 +1,6 @@
 package jUnitTests;
-import com.backendTest.Archieve;
-import com.backendTest.SearchEngine;
+import com.backend.Archieve;
+import com.backend.SearchEngine;
 import org.junit.jupiter.api.Test;
 import java.nio.file.Path;
 import java.nio.file.Paths;
