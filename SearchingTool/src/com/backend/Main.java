@@ -9,7 +9,7 @@ public class Main {
      * */
     public static void main(String[] args) {
 
-        if (args.length > 1) {
+        if (args.length > 0) {
             String dir = args[0];
             SearchEngine searchEngine = new SearchEngine();
             UserInterface userInterface = new UserInterface();
