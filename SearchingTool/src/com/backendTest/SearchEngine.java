@@ -14,13 +14,6 @@ import static com.backendTest.RankingArchieves.calcRankArchieves;
 import static com.backendTest.UserInterface.printMessage;
 
 public class SearchEngine {
-
-    // taking list of files as stream
-// stram map to process each element
-// use the map to pass path to string
-// map to get the string from the file and initialize the constructor
-// list the collection
-
     /**
      *  taking list of files as stream
      *  filter to avoid hidden files
@@ -45,12 +38,17 @@ public class SearchEngine {
         return archieve;
     }
 
+    /**
+     *  open and reading files scanned in scanDirectory()
+     *  inserting file content inside archieve.fileContent
+     * */
     public void openAndReadFile(List<Archieve> archieve) {
         for (Archieve arch : archieve) {
             BufferedReader reader;
             try {
                 reader = new BufferedReader(new FileReader(arch.getFile()));
-                String readFile = reader.readLine();
+                String readFile = reader
+                        .readLine();
                 arch.setFileContent(readFile);
             } catch (IOException e) {
                 printMessage("Error reading File: " + e.getMessage());
@@ -58,6 +56,11 @@ public class SearchEngine {
         }
     }
 
+    /**
+     *  receiving points from findAmountWordsInFile and
+     *  calculating score in calcRankArchieves
+     *  setting score into Archieve.score
+     * */
     public void rankFile(String[] wordArray, List<Archieve> archieve) {
         for (Archieve arch : archieve) {
             int amountWordsFind = findAmountWordsInFile(wordArray, arch.getFileContent());
@@ -65,6 +68,9 @@ public class SearchEngine {
         }
     }
 
+    /**
+     *  counting words inserted in file read
+     * */
     private int findAmountWordsInFile (String[] wordEntry,String fileRead) {
         int score = 0;
 

@@ -15,9 +15,7 @@ public class Archieve implements Comparable<Archieve>{
         return file;
     }
 
-    public String getFileContent() {
-        return fileContent;
-    }
+    public String getFileContent() { return fileContent; }
 
     public double getScore() {
         return score;
