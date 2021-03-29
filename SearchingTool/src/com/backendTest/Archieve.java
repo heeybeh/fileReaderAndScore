@@ -1,6 +1,6 @@
 package com.backendTest;
 
-class Archieve {
+public class Archieve implements Comparable<Archieve>{
     private final String file;
     private  String fileContent;
     private double score;
@@ -29,5 +29,11 @@ class Archieve {
 
     public void setFileContent(String fileContent) {
         this.fileContent = fileContent;
+    }
+
+    @Override
+    public int compareTo(Archieve objArc) {
+        double compareScore = objArc.getScore();
+        return (int) (this.score - compareScore);
     }
 }

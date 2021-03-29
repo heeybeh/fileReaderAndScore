@@ -1,27 +1,23 @@
 package com.backendTest;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Objects;
-import java.util.Scanner;
-
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+        if (args.length > 1) {
+            String dir = args[0];
+            SearchEngine searchEngine = new SearchEngine();
+            UserInterface userInterface = new UserInterface();
 
-        String searchBarResult = "/Users/beatricefernandes/Documents/hoje";
-        SearchEngine searchEngine = new SearchEngine();
-        UserInterface userInterface = new UserInterface();
-        if (searchBarResult!= null) {
-            searchEngine.scanDirectory(searchBarResult);
-            searchEngine.openAndReadFile();
+            List<Archieve> archieves = searchEngine.scanDirectory(dir);
+            searchEngine.openAndReadFile(archieves);
             while(!userInterface.wordEntry().contains(":quit")) {
-                searchEngine.rankFile(userInterface.wordReceivedArray());
+                searchEngine.rankFile(userInterface.wordReceivedArray(), archieves);
+                userInterface.printAllFilesAndScore(archieves);
             }
+        } else {
+            UserInterface.printMessage("Please Insert a valid path");
         }
     }
 }

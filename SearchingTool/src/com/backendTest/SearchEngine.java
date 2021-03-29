@@ -4,32 +4,48 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.backendTest.RankingArchieves.calcRankArchieves;
-import static com.backendTest.UserInterface.*;
+import static com.backendTest.UserInterface.printMessage;
 
 public class SearchEngine {
-    private List<Archieve> archieve = new ArrayList<Archieve>();
 
-    public void scanDirectory(String path) {
+    // taking list of files as stream
+// stram map to process each element
+// use the map to pass path to string
+// map to get the string from the file and initialize the constructor
+// list the collection
+
+    /**
+     *  taking list of files as stream
+     *  filter to avoid hidden files
+     *  stream map to process each element
+     *  map to pass path to string
+     *  map to get the string from the file and initialize the constructor
+     *  list the collection
+     * */
+    public List<Archieve> scanDirectory(String path) {
+        List<Archieve> archieve = new ArrayList<>();
         try {
-            archieve = Files.list(Paths.get(path))
-                    .map(Path::toString)
-                    .map(file -> new Archieve(file, 0, ""))
-                    .collect(Collectors.toList());
+            archieve =
+                    Files.list(Paths.get(path))
+                            .filter(file -> !file.toFile().isHidden())
+                            .map(Path::toString)
+                            .map(file -> new Archieve(file, 0, ""))
+                            .collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+            printMessage("Error: No files read. " + e.getMessage());
         }
-
-        System.out.println(archieve.size() + " files read in directory " + path);
+        printMessage(archieve.size() + " files read in directory " + path);
+        return archieve;
     }
 
-    public void openAndReadFile() {
+    public void openAndReadFile(List<Archieve> archieve) {
         for (Archieve arch : archieve) {
             BufferedReader reader;
             try {
@@ -37,16 +53,15 @@ public class SearchEngine {
                 String readFile = reader.readLine();
                 arch.setFileContent(readFile);
             } catch (IOException e) {
-                System.out.println("Error reading File: " + e);
+                printMessage("Error reading File: " + e.getMessage());
             }
         }
     }
-    public void rankFile(String[] wordArray) {
+
+    public void rankFile(String[] wordArray, List<Archieve> archieve) {
         for (Archieve arch : archieve) {
             int amountWordsFind = findAmountWordsInFile(wordArray, arch.getFileContent());
             arch.setScore(calcRankArchieves((double) wordArray.length, amountWordsFind));
-            System.out.println(arch.getFile() + " : " + formatNumber().format(arch.getScore()) + "%");
-
         }
     }
 
@@ -54,14 +69,12 @@ public class SearchEngine {
         int score = 0;
 
         for (String w : wordEntry) {
-            if (fileRead.contains(w)) {
+            Pattern pattern = Pattern.compile("\\b"+ w +"\\b");
+            Matcher matcher = pattern.matcher(fileRead);
+            if (matcher.find()) {
                 score ++;
             }
         }
         return score;
-    }
-
-    private NumberFormat formatNumber(){
-        return new DecimalFormat("##");
     }
 }
